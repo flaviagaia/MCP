@@ -24,9 +24,9 @@ Servidor MCP read-only para consultas analíticas em SQLite, com catálogo de ta
 
 ## Próximos projetos sugeridos
 
-- `mcp-sql-analytics-server`
 - `mcp-policy-guard`
 - `mcp-github-ops-assistant`
+- `mcp-multi-source-research`
 
 ---
 
@@ -52,6 +52,6 @@ Read-only MCP server for analytics queries over SQLite, with table cataloging, s
 
 ## Suggested next projects
 
-- `mcp-sql-analytics-server`
 - `mcp-policy-guard`
 - `mcp-github-ops-assistant`
+- `mcp-multi-source-research`

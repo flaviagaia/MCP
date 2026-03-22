@@ -1,12 +1,17 @@
 import unittest
 from pathlib import Path
+import sys
+
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(PROJECT_ROOT))
 
 from src.document_store import DocumentStore
 
 
 class DocumentStoreTest(unittest.TestCase):
     def setUp(self):
-        docs_dir = Path(__file__).resolve().parents[1] / "docs"
+        docs_dir = PROJECT_ROOT / "docs"
         self.store = DocumentStore(docs_dir)
 
     def test_list_documents(self):
