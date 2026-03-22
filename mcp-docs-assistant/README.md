@@ -12,6 +12,39 @@ Servidor MCP read-only para consulta de documentação local. O projeto expõe d
 - busca semântica leve em documentação local com `BM25`
 - abordagem segura e read-only para conhecimento interno
 
+### Fluxograma do Case
+
+```mermaid
+flowchart LR
+    A["Cliente MCP ou Assistente de IA"] --> B["mcp-docs-assistant"]
+    B --> C["list_docs()"]
+    B --> D["search_docs(query)"]
+    B --> E["get_doc(doc_id)"]
+    C --> F["Catálogo de documentos"]
+    D --> G["Busca BM25 nos arquivos markdown"]
+    E --> H["Conteúdo completo do documento"]
+    F --> I["Resposta baseada em documentação"]
+    G --> I
+    H --> I
+```
+
+### Pipeline Técnico
+
+```mermaid
+flowchart TD
+    A["Arquivos markdown com frontmatter"] --> B["DocumentStore"]
+    B --> C["Leitura de metadados: doc_id, title, category, tags"]
+    B --> D["Tokenização simples"]
+    D --> E["BM25 index"]
+    E --> F["search_docs(query, top_k)"]
+    B --> G["get_doc(doc_id)"]
+    H["FastMCP server"] --> I["Tool: list_docs"]
+    H --> F
+    H --> G
+    H --> J["Resource: docs://catalog"]
+    H --> K["Prompt: docs_question"]
+```
+
 ### Ferramentas expostas
 
 - `list_docs()`: lista os documentos disponíveis
@@ -89,3 +122,36 @@ python3 src/server.py
 1. replace the files in `docs/` with real policies, runbooks, or internal documentation;
 2. keep the MCP layer read-only for safety;
 3. connect the server to an MCP client for AI-assisted document access.
+
+### Case Flow Diagram
+
+```mermaid
+flowchart LR
+    A["MCP Client or AI Assistant"] --> B["mcp-docs-assistant"]
+    B --> C["list_docs()"]
+    B --> D["search_docs(query)"]
+    B --> E["get_doc(doc_id)"]
+    C --> F["Document catalog"]
+    D --> G["BM25 search over markdown files"]
+    E --> H["Full document content"]
+    F --> I["Documentation-grounded answer"]
+    G --> I
+    H --> I
+```
+
+### Technical Pipeline
+
+```mermaid
+flowchart TD
+    A["Markdown files with frontmatter"] --> B["DocumentStore"]
+    B --> C["Metadata parsing: doc_id, title, category, tags"]
+    B --> D["Simple tokenization"]
+    D --> E["BM25 index"]
+    E --> F["search_docs(query, top_k)"]
+    B --> G["get_doc(doc_id)"]
+    H["FastMCP server"] --> I["Tool: list_docs"]
+    H --> F
+    H --> G
+    H --> J["Resource: docs://catalog"]
+    H --> K["Prompt: docs_question"]
+```
